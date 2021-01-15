@@ -57,6 +57,20 @@ def first_all():
         return jsonify(msg="出错了哦，请检查是否正确访问")
 
 
+#使用session进行登录
+@app.route("/try/login",methods=["POST"])
+def login():
+    pass
+
+#检查session状态
+@app.route("/try/session",methods=["GET"])
+def check_session():
+    pass
+
+#使用session进行登出
+@app.route("/try/login",methods=["GET"])
+def login_out():
+    pass
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000)
