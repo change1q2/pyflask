@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <style>
+        div{
+            width: 100%;
+            height: 200px;
+            border: 2px solid burlywood;
+        }
+        </style>
+</head>
+<body>
+<h1>欢迎来到小工具小组</h1>
+<div>
+{# 如果是表单提交则必须在表单元素上添加name属性 #}
+    <form action="/register2" method="get">
+        <p><input type="text" name='username' placeholder="请输入用户名"></p>
+        <p><input type="text" name="address" placeholder="请输入地址"></p>
+        <p><input type="submit" value="提交"></p>
+    </form>
+</div>
+<div>
+{# 使用post请求时使用的方法 #}
+    <form action="/register2" method="post">
+        <p><input type="text" name='check' placeholder="请输入搜索内容"></p>
+        <p><input type="submit" value="提交"></p>
+    </form>
+</div>
+</body>
+</html>
