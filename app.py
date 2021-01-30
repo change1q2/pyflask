@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, jsonify, Response, make_response, render_template
+from flask import Flask, redirect, request, jsonify, Response, make_response, render_template, json, url_for
 
 #实例化app，Flask是一个蓝图，你把它实例化成一个app对象
 import settings
@@ -6,7 +6,14 @@ import settings
 app = Flask(__name__)
 app.config.from_object(settings)
 data = {'a': '北京','b': '深圳','c': '广州'}
+users = []
 #用装饰器处理路由，route代表路由，加上@代表装饰器，app代表对象
+
+@app.route('/', endpoint= 'index6') #路由
+def index6():   #视图函数   mtv: view 视图   函数
+    return render_template('index.html')
+
+
 #绑定一个路由
 @app.route("/hello") #路由
 def hello_world():   #视图函数   mtv: view 视图   函数
@@ -173,6 +180,45 @@ def register2(): #获取页面提交的内容
 
     return '进来了'
 
+# @app.route('/register3',methods=['GET','POST'])
+# def regrest3():
+#     if request.method == "POST":
+#         username = request.form.get('username')
+#         password = request.form.get('password')
+#         repassword = request.form.get('repassword')
+#
+#         return '注册成功'
+#     return render_template('rergister3.html')
+
+@app.route('/register3',methods=['GET','POST'])
+def regrest3():
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('password')
+        repassword = request.form.get('repassword')
+        #用户密码一致性保存
+        if password == repassword:
+            user = {'username': username , 'password': password}
+            users.append(user)
+            # return '注册成功! <a href = "/">返回首页</a>'
+            return redirect(url_for('index6')) #重定向
+        else:
+            return "两次密码不一致"
+    return render_template('rergister3.html')
+
+@app.route("/show")
+def show():
+    #将列表转化为字符串  users[]---->str''  json字符串
+    j_str = json.dumps(users)
+    return j_str
+
+# @app.route('/add/<int:n1>/<int:n2>')
+# def add(n1,n2):
+#     if n1 > 0 and n2 > 0:
+#         r = n1 + n2
+#         return '运算结果：' + str(r)
+#     return '输入的两个数必须大于0'
+
 #使用session进行登录
 @app.route("/try/login",methods=["POST"])
 def login():
@@ -189,7 +235,11 @@ def login_out():
     pass
 
 
-
+# @app.route('/test')
+# def test():
+#     url = url_for('index6')  #路径反向解析（映射）
+#     # print(url)
+#     return 'test'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000,debug=True)
